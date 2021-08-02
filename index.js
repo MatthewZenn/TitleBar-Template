@@ -1,6 +1,8 @@
-var maximize = document.getElementById("maximize")
+var maximize = document.getElementById("maximize");
+var minimize = document.getElementById("minimize");
 
-maximize.addEventListener("click", Maximize)
+maximize.addEventListener("click", Maximize);
+minimize.addEventListener("click", Minimize);
 
 function Maximize() {
     if (window.innerWidth == screen.width) {
@@ -12,13 +14,15 @@ function Maximize() {
     }
 }
 
+function Minimize() {
+    ipcRenderer.send('minimize');
+}
+
+//this code goes in your electron main process
 ipcMain.on('minimize', () => {
     win.minimize();
     //win.hide();
   })
-
-//this code goes in your electron renderer
-ipcRenderer.send('minimize');
 
 var screenElectron = electron.screen;
 var mainScreen = screenElectron.getPrimaryDisplay();
